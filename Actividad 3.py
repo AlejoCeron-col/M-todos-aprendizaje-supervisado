@@ -1,5 +1,5 @@
 # ============================================================
-# 1. IMPORTACIÓN DE LIBRERÍAS MARCO
+# 1. IMPORTACIÓN DE LIBRERÍAS
 # ============================================================
 # Pandas: permite crear y manipular tablas de datos.
 import pandas as pd
@@ -27,7 +27,7 @@ from sklearn.metrics import (
 )
 
 # ============================================================
-# 2. CREACIÓN DEL DATASET MARCO
+# 2. CREACIÓN DEL DATASET
 # ============================================================
 
 # Creamos un diccionario donde cada columna representa
@@ -143,7 +143,7 @@ datos ={
 }
 
 # ============================================================
-# 3. CREAR DATAFRAME MARCO
+# 3. CREAR DATAFRAME
 # ============================================================
 
 # Convertimos el diccionario anterior en una tabla de Pandas.
@@ -157,7 +157,7 @@ print(df.head())
 print("\nCantidad de registros:", len(df))
 
 # ============================================================
-# 4. CONVERTIR DATOS DE TEXTO A NÚMEROS MARCO
+# 4. CONVERTIR DATOS DE TEXTO A NÚMEROS
 # ============================================================
 
 # Creamos un codificador para cada columna de texto.
@@ -185,7 +185,7 @@ df["tipo_ruta"] = le_tipo.fit_transform(df["tipo_ruta"])
 print("\n========== DATOS CODIFICADOS ==========")
 print(df.head())
 # ============================================================
-# 5. DEFINIR VARIABLES DE ENTRADA Y VARIABLE OBJETIVO DANIEL
+# 5. DEFINIR VARIABLES DE ENTRADA Y VARIABLE OBJETIVO
 # ============================================================
 
 # X contiene las características que utilizaremos
@@ -220,7 +220,7 @@ print("\nVariable objetivo y:")
 print(y.head())
 
 # ============================================================
-# 6. DIVIDIR DATOS PARA ENTRENAMIENTO Y PRUEBA DANIEL
+# 6. DIVIDIR DATOS PARA ENTRENAMIENTO Y PRUEBA
 # ============================================================
 
 # 70% de los datos serán utilizados para entrenar.
@@ -241,7 +241,7 @@ print("Datos para entrenamiento:", len(X_train))
 print("Datos para prueba:", len(X_test))
 
 # ============================================================
-# 7. CREAR EL MODELO DE APRENDIZAJE AUTOMÁTICO DANIEL
+# 7. CREAR EL MODELO DE APRENDIZAJE AUTOMÁTICO
 # ============================================================
 
 # Creamos un árbol de decisión.
@@ -264,7 +264,7 @@ print("\n========== MODELO ENTRENADO ==========")
 print("El árbol de decisión ha aprendido de los datos.")
 
 # ============================================================
-# 8. REALIZAR PREDICCIONES ALEJO
+# 8. REALIZAR PREDICCIONES
 # ============================================================
 
 # Utilizamos los datos de prueba.
@@ -281,3 +281,286 @@ print(y_test.values)
 
 print("\nValores predichos:")
 print(y_pred)
+
+# ============================================================
+# 9. EVALUAR LA PRECISIÓN 
+# ============================================================
+
+# accuracy_score compara:
+#
+#     valores reales
+#          VS
+#     valores predichos
+
+precision = accuracy_score(y_test, y_pred)
+
+
+print("\n========== PRECISIÓN ==========")
+
+print("Precisión decimal:", precision)
+
+print(
+    "Precisión porcentual:",
+    round(precision * 100, 2),
+    "%"
+)
+
+# ============================================================
+# 10. REPORTE DE CLASIFICACIÓN 
+# ============================================================
+
+print("\n========== REPORTE DE CLASIFICACIÓN ==========")
+
+print(
+    classification_report(
+        y_test,
+        y_pred,
+        target_names=le_tipo.classes_,
+        zero_division=0
+    )
+)
+
+# ============================================================
+# 11. GRÁFICO DE DISPERSIÓN 
+# ============================================================
+
+# Convertimos las etiquetas numéricas nuevamente a nombres
+# para identificar fácilmente las rutas.
+
+nombre_rapida = le_tipo.transform(["Rapida"])[0]
+nombre_lenta = le_tipo.transform(["Lenta"])[0]
+
+
+# Filtramos las rutas rápidas.
+rapidas = df[df["tipo_ruta"] == nombre_rapida]
+
+
+# Filtramos las rutas lentas.
+lentas = df[df["tipo_ruta"] == nombre_lenta]
+
+
+# Creamos el gráfico.
+plt.figure(figsize=(9, 6))
+
+
+# Rutas rápidas.
+plt.scatter(
+    rapidas["distancia_km"],
+    rapidas["tiempo_min"],
+    label="Ruta rápida",
+    s=80
+)
+
+
+# Rutas lentas.
+plt.scatter(
+    lentas["distancia_km"],
+    lentas["tiempo_min"],
+    label="Ruta lenta",
+    s=80
+)
+
+
+# Configuración del gráfico.
+plt.title("Distancia vs Tiempo de recorrido")
+plt.xlabel("Distancia (km)")
+plt.ylabel("Tiempo (minutos)")
+
+
+# Leyenda.
+plt.legend()
+
+
+# Cuadrícula.
+plt.grid(True)
+
+
+# Ajustar espacios.
+plt.tight_layout()
+
+
+# Mostrar.
+plt.show()
+
+# ============================================================
+# 12. NUEVOS RECORRIDOS
+# ============================================================
+
+nuevos_recorridos = pd.DataFrame({
+
+    "origen": [
+        "Terminal",
+        "Centro",
+        "Parque",
+        "Universidad"
+    ],
+
+    "destino": [
+        "Parque",
+        "Hospital",
+        "Aeropuerto",
+        "Terminal"
+    ],
+
+    "linea": [
+        "L1",
+        "L3",
+        "L4",
+        "L2"
+    ],
+
+    "num_estaciones": [
+        2,
+        3,
+        4,
+        3
+    ],
+
+    "distancia_km": [
+        2.5,
+        5.2,
+        9.0,
+        6.0
+    ],
+
+    "hora_salida": [
+        8,
+        18,
+        19,
+        10
+    ],
+
+    "tiempo_min": [
+        9,
+        18,
+        35,
+        20
+    ],
+
+    "cantidad_pasajeros": [
+        20,
+        55,
+        90,
+        45
+    ],
+
+    "retraso_min": [
+        0,
+        3,
+        8,
+        2
+    ]
+})
+
+
+print("\n========== NUEVOS RECORRIDOS ==========")
+
+print(nuevos_recorridos)
+
+# ============================================================
+# 13. CODIFICAR LOS NUEVOS RECORRIDOS
+# ============================================================
+
+nuevos_recorridos["origen"] = le_origen.transform(
+    nuevos_recorridos["origen"]
+)
+
+nuevos_recorridos["destino"] = le_destino.transform(
+    nuevos_recorridos["destino"]
+)
+
+nuevos_recorridos["linea"] = le_linea.transform(
+    nuevos_recorridos["linea"]
+)
+
+# ============================================================
+# 14. PREDICCIÓN DE NUEVOS RECORRIDOS
+# ============================================================
+
+# El modelo analiza los nuevos recorridos.
+
+predicciones = modelo.predict(
+    nuevos_recorridos
+)
+
+
+# Convertimos nuevamente los números
+# a nombres comprensibles.
+
+resultado = le_tipo.inverse_transform(
+    predicciones
+)
+
+
+print("\n========== RESULTADOS ==========")
+
+
+for i, prediccion in enumerate(resultado):
+
+    print(
+        f"Recorrido {i + 1}: {prediccion}"
+    )
+# ============================================================
+# 15. TABLA FINAL DE PREDICCIONES
+# ============================================================
+
+# Creamos una copia de los nuevos recorridos
+# para poder mostrar la información.
+
+resultados = pd.DataFrame({
+    "Origen": [
+        "Terminal",
+        "Centro",
+        "Parque",
+        "Universidad"
+    ],
+
+    "Destino": [
+        "Parque",
+        "Hospital",
+        "Aeropuerto",
+        "Terminal"
+    ],
+
+    "Linea": [
+        "L1",
+        "L3",
+        "L4",
+        "L2"
+    ],
+
+    "Distancia_km": [
+        2.5,
+        5.2,
+        9.0,
+        6.0
+    ],
+
+    "Tiempo_min": [
+        9,
+        18,
+        35,
+        20
+    ],
+
+    "Pasajeros": [
+        20,
+        55,
+        90,
+        45
+    ],
+
+    "Retraso_min": [
+        0,
+        3,
+        8,
+        2
+    ],
+
+    "Prediccion": resultado
+})
+
+
+print("\n========== TABLA FINAL ==========")
+
+print(resultados.to_string(index=False))
