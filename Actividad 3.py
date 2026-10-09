@@ -33,113 +33,113 @@ from sklearn.metrics import (
 # Creamos un diccionario donde cada columna representa
 # una característica de un recorrido.
 
-datos ={
+datos = {
 
-    "origen":[
-    
-        "Terminal", "Terminal", "Centro", "Centro", "Parque",
-        "Parque", "Universidad", "Estadio", "Estadio", "Hospital",
-        "Terminal", "Centro", "Parque", "Universidad", "Hospital",
-        "Terminal", "Centro", "Estadio", "Parque", "Aeropuerto",
-        "Terminal", "Centro", "Universidad", "Estadio", "Hospital",
-        "Terminal", "Parque", "Universidad", "Estadio", "Aeropuerto"
-],
+    # Estación desde donde comienza el recorrido.
+    "origen": [
+        "Terminal", "Terminal", "Centro", "Centro", "Parque",
+        "Parque", "Universidad", "Estadio", "Estadio", "Hospital",
+        "Terminal", "Centro", "Parque", "Universidad", "Hospital",
+        "Terminal", "Centro", "Estadio", "Parque", "Aeropuerto",
+        "Terminal", "Centro", "Universidad", "Estadio", "Hospital",
+        "Terminal", "Parque", "Universidad", "Estadio", "Aeropuerto"
+    ],
 
-    # Estación donde termina el recorrido.
-    "destino": [
-        "Centro", "Estadio", "Parque", "Universidad", "Universidad",
-        "Hospital", "Estadio", "Hospital", "Aeropuerto", "Aeropuerto",
-        "Parque", "Hospital", "Estadio", "Hospital", "Terminal",
-        "Universidad", "Aeropuerto", "Terminal", "Aeropuerto", "Centro",
-        "Hospital", "Aeropuerto", "Centro", "Aeropuerto", "Centro",
-        "Aeropuerto", "Hospital", "Terminal", "Hospital", "Universidad"
-    ],
+    # Estación donde termina el recorrido.
+    "destino": [
+        "Centro", "Estadio", "Parque", "Universidad", "Universidad",
+        "Hospital", "Estadio", "Hospital", "Aeropuerto", "Aeropuerto",
+        "Parque", "Hospital", "Estadio", "Hospital", "Terminal",
+        "Universidad", "Aeropuerto", "Terminal", "Aeropuerto", "Centro",
+        "Hospital", "Aeropuerto", "Centro", "Aeropuerto", "Centro",
+        "Aeropuerto", "Hospital", "Terminal", "Hospital", "Universidad"
+    ],
 
-    # Línea de transporte utilizada.
-    "linea": [
-        "L1", "L2", "L1", "L1", "L1",
-        "L3", "L2", "L2", "L4", "L4",
-        "L1", "L3", "L2", "L3", "L3",
-        "L1", "L4", "L4", "L2", "L4",
-        "L3", "L4", "L1", "L2", "L3",
-        "L4", "L2", "L3", "L2", "L4"
-    ],
+    # Línea de transporte utilizada.
+    "linea": [
+        "L1", "L2", "L1", "L1", "L1",
+        "L3", "L2", "L2", "L4", "L4",
+        "L1", "L3", "L2", "L3", "L3",
+        "L1", "L4", "L4", "L2", "L4",
+        "L3", "L4", "L1", "L2", "L3",
+        "L4", "L2", "L3", "L2", "L4"
+    ],
 
-    # Número de estaciones que tiene el recorrido.
-    "num_estaciones": [
-        2, 2, 2, 2, 2,
-        2, 2, 2, 2, 2,
-        3, 3, 3, 3, 3,
-        3, 3, 3, 3, 3,
-        4, 4, 4, 4, 4,
-        4, 4, 4, 4, 4
-    ],
+    # Número de estaciones que tiene el recorrido.
+    "num_estaciones": [
+        2, 2, 2, 2, 2,
+        2, 2, 2, 2, 2,
+        3, 3, 3, 3, 3,
+        3, 3, 3, 3, 3,
+        4, 4, 4, 4, 4,
+        4, 4, 4, 4, 4
+    ],
 
-    # Distancia aproximada del recorrido en kilómetros.
-    "distancia_km": [
-        2.1, 3.5, 1.8, 3.2, 2.7,
-        3.8, 3.1, 4.0, 5.2, 5.8,
-        4.5, 5.1, 4.3, 5.5, 5.7,
-        5.0, 6.2, 6.8, 5.9, 7.0,
-        7.2, 8.0, 7.5, 8.3, 8.7,
-        9.1, 9.5, 10.0, 9.8, 10.5
-    ],
+    # Distancia aproximada del recorrido en kilómetros.
+    "distancia_km": [
+        2.1, 3.5, 1.8, 3.2, 2.7,
+        3.8, 3.1, 4.0, 5.2, 5.8,
+        4.5, 5.1, 4.3, 5.5, 5.7,
+        5.0, 6.2, 6.8, 5.9, 7.0,
+        7.2, 8.0, 7.5, 8.3, 8.7,
+        9.1, 9.5, 10.0, 9.8, 10.5
+    ],
 
-    # Hora en la que comienza el recorrido.
-    "hora_salida": [
-        7, 8, 9, 10, 11,
-        12, 13, 14, 15, 16,
-        17, 18, 19, 20, 21,
-        7, 8, 9, 10, 11,
-        12, 13, 14, 15, 16,
-        17, 18, 19, 20, 21
-    ],
+    # Hora en la que comienza el recorrido.
+    "hora_salida": [
+        7, 8, 9, 10, 11,
+        12, 13, 14, 15, 16,
+        17, 18, 19, 20, 21,
+        7, 8, 9, 10, 11,
+        12, 13, 14, 15, 16,
+        17, 18, 19, 20, 21
+    ],
 
-    # Tiempo que tarda el recorrido en minutos.
-    "tiempo_min": [
-        8, 12, 7, 11, 10,
-        13, 11, 14, 18, 20,
-        15, 17, 16, 19, 21,
-        17, 22, 23, 21, 25,
-        26, 29, 28, 31, 33,
-        32, 35, 37, 36, 40
-    ],
+    # Tiempo que tarda el recorrido en minutos.
+    "tiempo_min": [
+        8, 12, 7, 11, 10,
+        13, 11, 14, 18, 20,
+        15, 17, 16, 19, 21,
+        17, 22, 23, 21, 25,
+        26, 29, 28, 31, 33,
+        32, 35, 37, 36, 40
+    ],
 
-    # Cantidad estimada de pasajeros.
-    "cantidad_pasajeros": [
-        15, 22, 18, 20, 25,
-        28, 30, 35, 40, 42,
-        45, 50, 48, 55, 60,
-        52, 58, 65, 62, 70,
-        75, 80, 78, 85, 90,
-        88, 95, 92, 100, 105
-    ],
+    # Cantidad estimada de pasajeros.
+    "cantidad_pasajeros": [
+        15, 22, 18, 20, 25,
+        28, 30, 35, 40, 42,
+        45, 50, 48, 55, 60,
+        52, 58, 65, 62, 70,
+        75, 80, 78, 85, 90,
+        88, 95, 92, 100, 105
+    ],
 
-    # Cantidad de minutos de retraso.
-    "retraso_min": [
-        0, 1, 0, 1, 1,
-        2, 1, 2, 3, 3,
-        2, 3, 2, 4, 4,
-        3, 4, 5, 4, 5,
-        5, 6, 5, 7, 7,
-        6, 8, 7, 9, 10
-    ],
+    # Cantidad de minutos de retraso.
+    "retraso_min": [
+        0, 1, 0, 1, 1,
+        2, 1, 2, 3, 3,
+        2, 3, 2, 4, 4,
+        3, 4, 5, 4, 5,
+        5, 6, 5, 7, 7,
+        6, 8, 7, 9, 10
+    ],
 
-    # VARIABLE OBJETIVO.
-    #
-    # Esta es la respuesta que queremos que la IA aprenda.
-    #
-    # 0 = Rápida
-    # 1 = Lenta
-    #
-    "tipo_ruta": [
-        "Rapida", "Rapida", "Rapida", "Rapida", "Rapida",
-        "Rapida", "Rapida", "Rapida", "Lenta", "Lenta",
-        "Lenta", "Lenta", "Lenta", "Lenta", "Lenta",
-        "Lenta", "Lenta", "Lenta", "Lenta", "Lenta",
-        "Lenta", "Lenta", "Lenta", "Lenta", "Lenta",
-        "Lenta", "Lenta", "Lenta", "Lenta", "Lenta"
-    ]
+    # VARIABLE OBJETIVO.
+    #
+    # Esta es la respuesta que queremos que la IA aprenda.
+    #
+    # 0 = Rápida
+    # 1 = Lenta
+    #
+    "tipo_ruta": [
+        "Rapida", "Rapida", "Rapida", "Rapida", "Rapida",
+        "Rapida", "Rapida", "Rapida", "Lenta", "Lenta",
+        "Lenta", "Lenta", "Lenta", "Lenta", "Lenta",
+        "Lenta", "Lenta", "Lenta", "Lenta", "Lenta",
+        "Lenta", "Lenta", "Lenta", "Lenta", "Lenta",
+        "Lenta", "Lenta", "Lenta", "Lenta", "Lenta"
+    ]
 }
 
 # ============================================================
